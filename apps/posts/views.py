@@ -45,7 +45,7 @@ class RegionModelViewSet(ModelViewSet):
 
 
 # Category
-class CategoryCreateAPIView(ListCreateAPIView):
+class CategoryCreateAPIView(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategoryModelSerializer
 
