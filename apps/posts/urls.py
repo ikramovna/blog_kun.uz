@@ -15,6 +15,5 @@ urlpatterns = [
     path('', include(routers.urls)),
     path('send_email/', SendMailAPIView.as_view()),
     path('blog_detail/<int:pk>/', BlogDetailRetrieveAPIView.as_view()),
-    # path('search/', SearchAPIView.as_view()),
 
 ]

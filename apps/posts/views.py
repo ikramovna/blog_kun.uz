@@ -1,5 +1,4 @@
-from rest_framework.generics import (ListCreateAPIView, RetrieveAPIView)
-from rest_framework.generics import (ListCreateAPIView, RetrieveAPIView)
+from rest_framework.generics import (RetrieveAPIView)
 from rest_framework.response import Response
 from rest_framework.views import (APIView)
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
@@ -65,14 +64,3 @@ class SendMailAPIView(APIView):
             return Response({'success': False, 'message': str(e)})
 
         return Response({'success': True, 'message': 'Email sent!'})
-
-
-# Search
-# class SearchAPIView(APIView):
-#
-#     @swagger_auto_schema(query_serializer=SearchSerializer)
-#     def get(self, request):
-#         q = request.GET.get('title', 'short_description', None)
-#         posts = New.objects.filter(title__iexact=q, short_description__iexact=q)
-#         serializer = NewModelSerializer(posts, many=True)
-#         return Response(serializer.data)
