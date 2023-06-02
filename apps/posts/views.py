@@ -20,9 +20,13 @@ class BlogDetailRetrieveAPIView(RetrieveAPIView):
     queryset = New.objects.all()
     serializer_class = NewModelSerializer
 
-    def get_queryset(self):
-        query = super().get_queryset().order_by('-views')
-        return query
+    def retrieve(self, request, *args, **kwargs):
+        self.get_queryset()
+        instance = self.get_object()
+        instance.view_count += 1
+        instance.save()
+        serializer = NewModelSerializer(instance)
+        return Response(serializer.data)
 
 
 # LastNew

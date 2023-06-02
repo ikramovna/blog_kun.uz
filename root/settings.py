@@ -113,17 +113,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-# PARLER_LANGUAGES = {
-#     None: (
-#         {'code': 'en', },
-#         {'code': 'ru', },
-#         {'code': 'uz', },
-#     ),
-#     'default': {
-#         'fallbacks': ['uz'],
-#         'hide_untranslated': False,
-#     }
-# }
+
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR / 'static')
