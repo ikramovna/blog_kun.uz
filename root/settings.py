@@ -30,6 +30,7 @@ THIRD_PARTY_APPS = [
 ]
 
 INSTALLED_APPS = [
+                     'modeltranslation',
                      'django.contrib.admin',
                      'django.contrib.auth',
                      'django.contrib.contenttypes',
@@ -97,7 +98,14 @@ DATABASES = {
 #     },
 # ]
 
-LANGUAGE_CODE = 'en'
+
+LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('ru', 'Russian'),
+    ('uz', 'Uzbek'),
+)
 
 TIME_ZONE = 'UTC'
 
@@ -105,29 +113,26 @@ USE_I18N = True
 
 USE_TZ = True
 
-LANGUAGES = (
-    ('en', _('English')),
-    ('ru', _('Russian')),
-    ('uz', _('Uzbek'))
-)
-
-PARLER_LANGUAGES = {
-    None: (
-        {'code': 'en', },
-        {'code': 'ru', },
-        {'code': 'uz', },
-    ),
-    'default': {
-        'fallbacks': ['en'],
-        'hide_untranslated': False,
-    }
-}
+# PARLER_LANGUAGES = {
+#     None: (
+#         {'code': 'en', },
+#         {'code': 'ru', },
+#         {'code': 'uz', },
+#     ),
+#     'default': {
+#         'fallbacks': ['uz'],
+#         'hide_untranslated': False,
+#     }
+# }
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR / 'static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
+
+MODELTRANSLATION_LANGUAGES = ('ru', 'en', 'uz')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 
 LOCALE_PATHS = [
     BASE_DIR / 'locale/',
@@ -163,4 +168,3 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
-

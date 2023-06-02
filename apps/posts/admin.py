@@ -1,42 +1,24 @@
 from django.contrib import admin
-from parler.admin import TranslatableAdmin
+from modeltranslation.admin import TranslationAdmin
 
-from apps.posts.models import Staff, New
-
-
-# class CategoryAdmin(admin.ModelAdmin):
-#     list_display = ('name', 'parent')
-#
-#
-# admin.site.register(Category, CategoryAdmin)
+from apps.posts.models import Staff, New, Category, Region
 
 
-# class NewAdmin(admin.ModelAdmin):
-#     list_display = ('title', 'short_description')
-#
-#
-# admin.site.register(New, NewAdmin)
+@admin.register(New)
+class NewAdmin(TranslationAdmin):
+    pass
 
 
-class NewAdmin(TranslatableAdmin):
-    list_display = ('title', 'short_description', 'long_description')
-    fieldsets = (
-        (None, {
-            'fields': ('title', 'short_description', 'long_description'),
-        }),
-    )
-
-    def save_model(self, request, obj, form, change):
-        obj.author_id = request.user.id
-        super().save_model(request, obj, form, change)
+@admin.register(Category)
+class CategoryAdmin(TranslationAdmin):
+    pass
 
 
-admin.site.register(New, NewAdmin)
+@admin.register(Staff)
+class StaffAdmin(TranslationAdmin):
+    pass
 
 
-
-class StaffAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'job')
-
-
-admin.site.register(Staff, StaffAdmin)
+@admin.register(Region)
+class RegionAdmin(TranslationAdmin):
+    pass
