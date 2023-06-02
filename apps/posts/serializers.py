@@ -34,6 +34,12 @@ class LastBlogModelSerializer(ModelSerializer):
         exclude = ()
 
 
+class SearchModelSerializer(ModelSerializer):
+    class Meta:
+        model = New
+        fields = ('title', 'short_description', 'long_description')
+
+
 class SendEmailSerializer(Serializer):
     name = CharField(max_length=100)
     email = EmailField()

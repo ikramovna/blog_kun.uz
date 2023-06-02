@@ -1,3 +1,6 @@
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.filters import SearchFilter
+from rest_framework.generics import (RetrieveAPIView, ListAPIView)
 from rest_framework.generics import (RetrieveAPIView)
 from rest_framework.response import Response
 from rest_framework.views import (APIView)
@@ -5,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from .models import (New, Category, Staff, Region)
 from .serializers import (NewModelSerializer, CategoryModelSerializer, StaffModelSerializer, SendEmailSerializer,
-                          RegionModelSerializer, LastBlogModelSerializer)
+                          RegionModelSerializer, LastBlogModelSerializer, SearchModelSerializer)
 from .tasks import send_email_customer
 
 
@@ -53,7 +56,17 @@ class CategoryCreateAPIView(ModelViewSet):
     serializer_class = CategoryModelSerializer
 
 
+# Search
+class SearchModelSearchAPIView(ListAPIView):
+    queryset = New.objects.all()
+    serializer_class = SearchModelSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'short_description']
+
+
 # Send email
+
+
 class SendMailAPIView(APIView):
     def post(self, request):
         try:
