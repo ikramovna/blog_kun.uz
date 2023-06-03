@@ -26,7 +26,6 @@ THIRD_PARTY_APPS = [
     'mptt',
     'django_filters',
 
-
 ]
 
 INSTALLED_APPS = [
@@ -113,8 +112,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR / 'static')
 
@@ -157,4 +154,14 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 # DRF
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
 }

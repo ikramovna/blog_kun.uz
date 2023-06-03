@@ -1,6 +1,6 @@
-from drf_yasg.utils import swagger_auto_schema
+from django.core.cache import cache
 from rest_framework.filters import SearchFilter
-from rest_framework.generics import (RetrieveAPIView, ListAPIView)
+from rest_framework.generics import (ListAPIView)
 from rest_framework.generics import (RetrieveAPIView)
 from rest_framework.response import Response
 from rest_framework.views import (APIView)
@@ -16,6 +16,13 @@ from .tasks import send_email_customer
 class BlogModelViewSet(ModelViewSet):
     queryset = New.objects.all()
     serializer_class = NewModelSerializer
+
+    def list(self, request, *args, **kwargs):
+        if cache.get('data') is None:
+            cache.set('data', self.get_queryset(), timeout=60)
+            return Response(self.get_serializer(self.get_queryset(), many=True).data)
+        else:
+            return Response(self.get_serializer(cache.get('data'), many=True).data)
 
 
 # PostDetail

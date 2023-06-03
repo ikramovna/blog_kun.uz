@@ -4,6 +4,26 @@ from rest_framework.serializers import ModelSerializer, Serializer
 from apps.posts.models import (New, Category, Staff, Region)
 
 
+# -------------Extract category by id and name---------------
+
+# class NewCategoryModelSerializer(ModelSerializer):
+#     class Meta:
+#         model = Category
+#         fields = ('id', 'name')
+
+
+# class NewModelSerializer(ModelSerializer):
+#     category = SerializerMethodField()
+#
+#     def get_category(self, obj: New):
+#         return model_to_dict(obj.category, ('id', 'name'))
+#
+#     class Meta:
+#         model = New
+#         fields = ('title', 'category')
+
+
+# ----------------------------------------------------------
 class NewModelSerializer(ModelSerializer):
     class Meta:
         model = New

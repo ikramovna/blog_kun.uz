@@ -1,4 +1,5 @@
-from django.db.models import (Model, CharField, TextField, ImageField, DateTimeField, CASCADE, ForeignKey, IntegerField)
+from django.db.models import (Model, CharField, TextField, ImageField, DateTimeField, CASCADE, ForeignKey, IntegerField,
+                              Index)
 from django.utils.translation import gettext_lazy as _
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
@@ -11,15 +12,25 @@ class New(Model):
     image = ImageField(upload_to='post/images/')
     created_at = DateTimeField(auto_now_add=True)
     views = IntegerField(default=0)
-    category = ForeignKey('Category', CASCADE)
+    category = ForeignKey('posts.Category', CASCADE, related_name='category_set')
+
+    class Meta:
+        indexes = [
+            Index(fields=['title', 'short_description', 'long_description'])
+        ]
 
     def __str__(self):
         return self.title
 
 
 class Category(MPTTModel):
-    name = CharField(_('name'), max_length=150)
+    name = CharField(max_length=150)
     parent = TreeForeignKey('self', CASCADE, 'children', null=True, blank=True)
+
+    class Meta:
+        indexes = [
+            Index(fields=['name'])
+        ]
 
     def __str__(self):
         return self.name
@@ -30,14 +41,27 @@ class Staff(Model):
     job = CharField(max_length=50)
     image = ImageField(upload_to='staff/images/')
 
+    class Meta:
+        indexes = [
+            Index(fields=['full_name', 'job'])
+        ]
+
     def __str__(self):
         return self.full_name
+
+    # @property
+    # def get_first_name(self):
+    #     return self.full_name.split()[1]
 
 
 class Region(Model):
     name = CharField(max_length=100)
     blog = ForeignKey('New', CASCADE)
 
+    class Meta:
+        indexes = [
+            Index(fields=['name'])
+        ]
+
     def __str__(self):
         return self.name
-
