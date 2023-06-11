@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db.models import (Model, CharField, TextField, ImageField, DateTimeField, CASCADE, ForeignKey, IntegerField,
                               Index)
 from django.utils.translation import gettext_lazy as _
@@ -57,6 +58,9 @@ class Staff(Model):
 class Region(Model):
     name = CharField(max_length=100)
     blog = ForeignKey('New', CASCADE)
+
+    # phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$')
+    # phone_number = CharField(validators=[phone_regex], max_length=17, blank=True)
 
     class Meta:
         indexes = [
