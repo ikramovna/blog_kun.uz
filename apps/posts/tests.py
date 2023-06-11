@@ -1,6 +1,6 @@
 import pytest
 
-from apps.posts.models import Staff
+from apps.posts.models import Staff, New
 
 
 @pytest.mark.django_db
@@ -18,3 +18,24 @@ class TestStaffModel:
 
         assert staff.full_name == data['full_name']
         assert count + 1 == Staff.objects.count()
+
+
+@pytest.mark.django_db
+class TestNewModel:
+
+    def test_new(self):
+        count = New.objects.count()
+
+        # data = {
+        #     'title': 'Kun.uz',
+        #     'short_description': 'test_description',
+        #     'long_description': 'test_description',
+        #     'image': 'test_logo.png',
+        #     'created_at': '2023-06-13',
+        #     'views': '23',
+        #     'category': 'New',
+        # }
+        # new = New.objects.create(**data)
+        #
+        # assert new.title == data['title']
+        # assert count + 1 == New.objects.count()
