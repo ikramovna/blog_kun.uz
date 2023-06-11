@@ -36,6 +36,6 @@ class TestNewModel:
             'category': 'New',
         }
         new = New.objects.create(**data)
-        #
-        # assert new.title == data['title']
-        # assert count + 1 == New.objects.count()
+
+        assert new.title == data['title']
+        assert count + 1 == New.objects.count()
