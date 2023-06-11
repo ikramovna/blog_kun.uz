@@ -34,6 +34,7 @@ class CategoryModelSerializer(ModelSerializer):
     class Meta:
         model = Category
         exclude = ()
+        depth = 10
 
 
 class StaffModelSerializer(ModelSerializer):
