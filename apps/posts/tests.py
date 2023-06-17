@@ -1,6 +1,6 @@
 import pytest
 
-from apps.posts.models import Staff, New
+from apps.posts.models import Staff, New, Region
 
 
 @pytest.mark.django_db
@@ -39,3 +39,19 @@ class TestNewModel:
 
         assert new.title == data['title']
         assert count + 1 == New.objects.count()
+
+
+@pytest.mark.django_db
+class TestRegionModel:
+
+    def test_region(self):
+        count = Region.objects.count()
+
+        data = {
+            'name': 'Samarqand',
+            'blog': 'Kun.uz',
+        }
+        staff = Region.objects.create(**data)
+
+        assert staff.full_name == data['name']
+        assert count + 1 == Region.objects.count()
