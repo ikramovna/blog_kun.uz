@@ -1,6 +1,6 @@
 import pytest
 
-from apps.posts.models import Staff, New, Region
+from apps.posts.models import Staff, New, Region, Category
 
 
 @pytest.mark.django_db
@@ -51,7 +51,22 @@ class TestRegionModel:
             'name': 'Samarqand',
             'blog': 'Kun.uz',
         }
-        staff = Region.objects.create(**data)
+        region = Region.objects.create(**data)
 
-        assert staff.full_name == data['name']
+        assert region.name == data['name']
         assert count + 1 == Region.objects.count()
+
+
+@pytest.mark.django_db
+class TestCategoryModel:
+
+    def test_category(self):
+        count = Category.objects.count()
+
+        data = {
+            'name': 'Clothes',
+        }
+        category = Category.objects.create(**data)
+
+        assert category.name == data['name']
+        assert count + 1 == Category.objects.count()
