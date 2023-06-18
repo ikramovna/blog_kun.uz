@@ -14,10 +14,8 @@ from .tasks import send_email_customer
 
 class IsAdminOrReadOnly(BasePermission):
     def has_permission(self, request, view):
-        # Allow read permissions to all users
         if request.method in ["GET", "HEAD", "OPTIONS"]:
             return True
-        # Only allow write permissions to admin users
         return request.user and request.user.is_staff
 
 
