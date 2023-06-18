@@ -12,7 +12,7 @@ Additional features ⬇
 
 Index ✅
 Cache - django redis cache ✅
-
+Permissions - IsAdminOrReadOnly, AllowAny
 
 
 Testing✅

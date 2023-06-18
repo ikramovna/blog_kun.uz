@@ -7,11 +7,11 @@ from apps.posts.views import (CategoryCreateAPIView, StaffModelViewSet, SendMail
                               )
 
 routers = DefaultRouter()
-routers.register('blog_mixins', BlogModelViewSet, '')
-routers.register('staff_mixins', StaffModelViewSet, '')
-routers.register('region_mixins', RegionModelViewSet, '')
-routers.register('last-blog_mixins', LastBlogListModelViewSet, '')
-routers.register('category_mixins', CategoryCreateAPIView, '')
+routers.register('blog', BlogModelViewSet)
+routers.register('staff', StaffModelViewSet)
+routers.register('region', RegionModelViewSet)
+routers.register('last-blog', LastBlogListModelViewSet)
+routers.register('category', CategoryCreateAPIView)
 
 urlpatterns = [
     path('', include(routers.urls)),
