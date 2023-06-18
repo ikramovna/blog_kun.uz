@@ -1,7 +1,7 @@
 from django.core.cache import cache
+from rest_framework.permissions import IsAdminUser
 from rest_framework.filters import SearchFilter
-from rest_framework.generics import (ListAPIView)
-from rest_framework.generics import (RetrieveAPIView)
+from rest_framework.generics import (ListAPIView, RetrieveAPIView)
 from rest_framework.response import Response
 from rest_framework.views import (APIView)
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
@@ -16,6 +16,9 @@ from .tasks import send_email_customer
 class BlogModelViewSet(ModelViewSet):
     queryset = New.objects.all()
     serializer_class = NewModelSerializer
+    permission_classes = [IsAdminUser]
+
+    # cache
 
     def list(self, request, *args, **kwargs):
         if cache.get('data') is None:
@@ -29,6 +32,9 @@ class BlogModelViewSet(ModelViewSet):
 class BlogDetailRetrieveAPIView(RetrieveAPIView):
     queryset = New.objects.all()
     serializer_class = NewModelSerializer
+    permission_classes = [IsAdminUser]
+
+    # view
 
     def retrieve(self, request, *args, **kwargs):
         self.get_queryset()
@@ -49,18 +55,21 @@ class LastBlogListModelViewSet(ReadOnlyModelViewSet):
 class StaffModelViewSet(ModelViewSet):
     queryset = Staff.objects.all()
     serializer_class = StaffModelSerializer
+    permission_classes = [IsAdminUser]
 
 
 # Region
 class RegionModelViewSet(ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionModelSerializer
+    permission_classes = [IsAdminUser]
 
 
 # Category
 class CategoryCreateAPIView(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategoryModelSerializer
+    permission_classes = [IsAdminUser]
 
 
 # Search
