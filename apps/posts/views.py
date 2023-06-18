@@ -1,5 +1,5 @@
 from django.core.cache import cache
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, BasePermission, AllowAny
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import (ListAPIView, RetrieveAPIView)
 from rest_framework.response import Response
@@ -12,11 +12,20 @@ from .serializers import (NewModelSerializer, CategoryModelSerializer, StaffMode
 from .tasks import send_email_customer
 
 
+class IsAdminOrReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        # Allow read permissions to all users
+        if request.method in ["GET", "HEAD", "OPTIONS"]:
+            return True
+        # Only allow write permissions to admin users
+        return request.user and request.user.is_staff
+
+
 # Post
 class BlogModelViewSet(ModelViewSet):
     queryset = New.objects.all()
     serializer_class = NewModelSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
     # cache
 
@@ -32,7 +41,7 @@ class BlogModelViewSet(ModelViewSet):
 class BlogDetailRetrieveAPIView(RetrieveAPIView):
     queryset = New.objects.all()
     serializer_class = NewModelSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
     # view
 
@@ -49,27 +58,28 @@ class BlogDetailRetrieveAPIView(RetrieveAPIView):
 class LastBlogListModelViewSet(ReadOnlyModelViewSet):
     queryset = New.objects.all().order_by('-created_at')
     serializer_class = LastBlogModelSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 # StaffList
 class StaffModelViewSet(ModelViewSet):
     queryset = Staff.objects.all()
     serializer_class = StaffModelSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
 
 # Region
 class RegionModelViewSet(ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionModelSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
 
 # Category
 class CategoryCreateAPIView(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategoryModelSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
 
 # Search
@@ -78,12 +88,15 @@ class SearchModelSearchAPIView(ListAPIView):
     serializer_class = SearchModelSerializer
     filter_backends = [SearchFilter]
     search_fields = ['title', 'short_description']
+    permission_classes = [AllowAny]
 
 
 # Send email
 
 
 class SendMailAPIView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         try:
             serializer = SendEmailSerializer(data=request.data)
