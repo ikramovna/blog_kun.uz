@@ -10,7 +10,7 @@ class NewTranslationOption(TranslationOptions):
 
 @register(Staff)
 class StaffTranslation(TranslationOptions):
-    fields = ('full_name', 'job')
+    fields = ('job',)
 
 
 @register(Category)
