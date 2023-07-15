@@ -25,7 +25,7 @@ class BlogModelViewSet(ModelViewSet):
     serializer_class = NewModelSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-    # cache
+    # cache0
 
     def list(self, request, *args, **kwargs):
         if cache.get('data') is None:
